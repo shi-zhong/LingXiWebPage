@@ -23,9 +23,9 @@ const BottomNavigativeBar = (props: any) => {
       url: '/home',
     },
     {
-      label: '百科',
+      label: '引导',
       icon: <BulbFilled />,
-      url: '/home1',
+      url: '/guide',
     },
     {
       label: '广场',
@@ -41,8 +41,7 @@ const BottomNavigativeBar = (props: any) => {
 
   const onClick = (url: string) => {
     setUrl(url);
-
-    props.history.push(url)
+    props.history.push(url);
   };
 
   return (

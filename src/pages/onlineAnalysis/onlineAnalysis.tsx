@@ -1,54 +1,129 @@
 import AppBarLayout from '@/layout/appBarNaviLayout/appBarNaviLayout';
-import { Input, Form, Button } from 'antd';
+import { Input, Form, Button, Upload, Modal, message } from 'antd';
+import { connect, Dispatch } from 'dva';
+import { PlusOutlined } from '@ant-design/icons';
 
 import AppBar from '@/component/AppBar/AppBar_navi';
 
 import './index.less';
 import { useState } from 'react';
 
+interface OnlineAnalysisProps {
+  block: any;
+  history: any;
+  dispatch: Dispatch;
+}
+
 const { TextArea } = Input;
 const { Item } = Form;
 
 const prefix = 'analysis-';
 
-const OnlineAnlysis = (props: any) => {
-  const [state, setState] = useState(false);
+function getBase64(file: File) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+}
+
+const OnlineAnlysis = (props: OnlineAnalysisProps) => {
+  const { dispatch } = props;
+
+  const [text, setText] = useState('');
+  const [fileList, setFileList] = useState([]);
+  const [previewVisible, setPreviewVisible] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+
+  const handlesubmit = () => {
+    const draws = fileList.map((file: any) => file?.preview);
+    if (text === '' && draws.length === 0) {
+      message.info('请和我们分享些什么吧!');
+      return;
+    }
+    const block = {
+      day: '今天',
+      date: '210',
+      draws,
+      content: text,
+    };
+    dispatch({
+      type: 'home/addBlock',
+      payload: [block, ...props.block],
+    });
+
+    message.success('发布成功!');
+    setTimeout(() => {
+      props.history.goBack();
+    }, 500);
+  };
+
+  const handlePreview = async (file: any) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+
+    setPreviewImage(file.url || file.preview);
+    setPreviewVisible(true);
+  };
+
+  const handleDraws = async (file: any) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+  };
 
   const FormTab = (
     <Form>
       <Item>
         <TextArea
-          rows={20}
+          rows={10}
           style={{ resize: 'none' }}
           placeholder="我们在倾听..."
+          value={text}
+          onChange={(e: any) => setText(e.target.value)}
         />
       </Item>
       <Item>
-        <Button
-          type="primary"
-          onClick={() => {
-            setState(true);
+        <Upload
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={handlePreview}
+          onChange={({ fileList }: any) => {
+            setFileList(fileList);
+            handleDraws(fileList[fileList.length - 1]);
           }}
         >
+          <div>
+            <PlusOutlined />
+            <div style={{ marginTop: 8 }}>Upload</div>
+          </div>
+        </Upload>
+      </Item>
+      <Item>
+        <Button type="primary" onClick={handlesubmit}>
           提交
         </Button>
       </Item>
     </Form>
   );
 
-  const AnswerTab = (
-    <div>
-      <div>
-        诗意，是诗人用一种艺术的方式，对于现实或想象的描述与自我感受的表达。在情感立场上，有歌颂的，也有批判的；在表达方式上，有委婉的，也有直抒胸臆的；在形式上，以《诗经》为代表的风雅颂和楚辞为滥觞，而汉代乐府又有所发展。诗意的主要载体，是为唐代达到巅峰的近体诗和古体诗，以及在宋代最流行的词，元代的曲。
-      </div>
-    </div>
-  );
-
   return (
     <AppBarLayout appBar={<AppBar history={props.history} />}>
-      <div className={prefix + 'container'}>{state ? AnswerTab : FormTab}</div>
+      <div className={prefix + 'container'}>{FormTab}</div>
+      <Modal
+        visible={previewVisible}
+        title={'预览'}
+        footer={null}
+        onCancel={() => setPreviewVisible(false)}
+      >
+        <img alt="example" style={{ width: '100%' }} src={previewImage} />
+      </Modal>
     </AppBarLayout>
   );
 };
 
-export default OnlineAnlysis;
+export default connect(({ home }: any) => ({
+  block: home.blocks,
+}))(OnlineAnlysis);

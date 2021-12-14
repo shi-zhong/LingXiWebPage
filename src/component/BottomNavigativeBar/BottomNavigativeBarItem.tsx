@@ -20,10 +20,13 @@ const BottomNavigativeBarItem = (props: BottomNavigativeBarItemProps) => {
   };
 
   return (
-    <div onClick={handleClick} className={prefix} style={{color: check? 'blue':'grey'}}>
+    <div
+      onClick={handleClick}
+      className={prefix}
+      style={{ color: check ? 'blue' : 'grey' }}
+    >
       <div className={prefix + 'inner-container'}>
         <div style={{ textAlign: 'center', fontSize: 16 }}>{icon}</div>
-
         <span className={prefix + ''} style={{ textAlign: 'center' }}>
           {label}
         </span>

@@ -24,7 +24,7 @@ const GlobalLayout = (props: Props) => {
       {/* 主页page */}
       {/*  */}
       <div>
-        <div style={{ height: window.innerHeight - 70 }}>{children}</div>
+        {children}
         <BottomNavigativeBar history={props.history} />
       </div>
       {/* 子页 page, 拥有相对应的 动画 */}

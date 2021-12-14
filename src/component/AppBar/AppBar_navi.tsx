@@ -24,9 +24,9 @@ const AppBar = (props: AppbarProps) => {
       </div>
       <div className={prefix + 'title'}>{document.title}</div>
       {/* 额外操作 */}
-      <div className={prefix + 'extra'}>
+      {/* <div className={prefix + 'extra'}>
         <TagTwoTone />
-      </div>
+      </div> */}
     </div>
   );
 };

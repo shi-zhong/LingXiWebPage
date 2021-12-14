@@ -1,0 +1,84 @@
+.mood-draw {
+  &-page {
+    height: 100%;
+    overflow: hidden;
+  }
+  &-head {
+    position: fixed;
+    top: 0;
+    height: 50px;
+    border-bottom: 1px solid rgb(201, 200, 200);
+    background-color: white;
+    width: 100%;
+
+    &-title {
+      font-size: 20px;
+      padding: 0 0 0 30px;
+      line-height: 50px;
+    }
+    &-option {
+      float: left;
+    }
+  }
+  &-tab {
+    &-container {
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 60px;
+    }
+    &-pane {
+      height: 200px;
+      background: coral;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    &-cho {
+      &-con {
+        width: 80%;
+        margin: 0 auto;
+        border: 2px solid coral;
+        border-radius: 5px;
+      }
+    }
+    &-block {
+      display: inline-block;
+      width: 50%;
+      height: 30px;
+      line-height: 30px;
+      font-size: 16x;
+      text-align: center;
+      //--------
+      background: white;
+      color: coral;
+
+      &-chosen {
+        display: inline-block;
+        width: 50%;
+        background: coral;
+        color: white;
+      }
+    }
+  }
+  &-analysis {
+    width: 90%;
+    margin: 10px auto;
+    height: calc(100vh - 340px);
+    overflow: auto;
+    &-title {
+      font-size: 18px;
+      padding: 10px 20px;
+      font-weight: bold;
+    }
+    &-content {
+      width: 90%;
+      // max-height: 60%;
+      overflow: auto;
+      margin: 0 auto;
+      word-break: break-all;
+    }
+  }
+}
+.p {
+  text-indent: 2em;
+}

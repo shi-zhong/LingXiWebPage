@@ -1,0 +1,122 @@
+@decoration-color: darkred;
+@date-number-color: red;
+.block {
+  &-container {
+    position: relative;
+    width: 90%;
+    margin: 50px auto;
+  }
+  &-left-decoration {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 32px;
+    &-circle {
+      position: relative;
+      width: 30px;
+      height: 30px;
+      border: 2px solid @decoration-color;
+      border-radius: 50%;
+      &::after {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: @decoration-color;
+        content: '';
+      }
+    }
+    &-line {
+      position: absolute;
+      top: 40px;
+      left: 50%;
+      bottom: 5px;
+      width: 3px;
+      border-radius: 1px;
+      background: @decoration-color;
+      transform: translateX(-50%);
+    }
+  }
+  &-right {
+    margin-left: 32px;
+  }
+  &-title {
+    clear: both;
+    overflow: hidden;
+    height: 40px;
+
+    &-left {
+      float: left;
+      font-size: 20px;
+      margin: 5px 10px;
+    }
+    &-right {
+      float: right;
+      font-size: 20px;
+      margin: 5px 20px;
+      &-number {
+        font-size: 22px;
+        color: @date-number-color;
+      }
+    }
+  }
+  &-content {
+    padding: 10px;
+    border: 1px solid green;
+    &-image {
+      margin: 5px 0;
+      &-blank {
+        width: 30%;
+      }
+      &-block {
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        width: 30%;
+        height: 0;
+        padding-bottom: 30%;
+        margin: 5px 0;
+      }
+      &-eslip {
+        position: relative;
+        width: 30%;
+        height: 0;
+        margin: 5px 0;
+        padding-bottom: 30%;
+        &-mask {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          width: 100%;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          background: rgba(68, 53, 42, 0.665);
+          font-size: 25px;
+          color: white;
+        }
+      }
+      &-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+    }
+    &-text {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;
+      word-break: break-all;
+      white-space: pre-wrap;
+      text-overflow: ellipsis;
+    }
+    &-extend {
+      color: peru;
+    }
+  }
+}
